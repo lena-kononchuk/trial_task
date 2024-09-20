@@ -27,7 +27,9 @@
 <body>
    <header id="header"></header>
    <main>
-      <section class="section section__welcome"></section>
+      <section class="section section__welcome">
+         <div id="form"></div>
+      </section>
       <section class="section section__service"></section>
       <section class="section section__article"></section>
       <section id="swiper"></section>
@@ -52,7 +54,8 @@
 
       // Load header, main content, and footer
       loadHTML("header", "sections/header.html");
-      loadHTML("header", "sections/swiper.html");
+       loadHTML("form", "sections/form.html");
+      loadHTML("swiper", "sections/swiper.html");
       loadHTML("footer", "sections/footer.html");
    </script>
 
