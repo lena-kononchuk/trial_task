@@ -1,21 +1,14 @@
 .article {
    background: linear-gradient(180deg, #D81E05 0%, #490900 100%);
-   display: grid;
-   grid-template-columns: 464px 1fr;
-   grid-template-rows: auto;
    position: relative;
-   align-items: start;
+   padding: 71px 15px 51px 15px;
 
    &__image {
       aspect-ratio: 1 / 1;
-      width: 464px;
       object-fit: cover;
-      grid-column: 1 / 2;
-      grid-row: 1;
       z-index: 2;
       position: relative;
-      top: 72px;
-      right: -58px;
+      margin-left: 40px;
 
       img {
          width: 100%;
@@ -24,13 +17,8 @@
    }
 
    &__text {
-      grid-column: 2 / 3;
-      /* Во второй колонке */
-      grid-row: 1;
-      /* В той же строке, что и изображение */
       z-index: 1;
       padding: 101px 27px 63px 92px;
-      width: 680px;
       background-image: url('../../img/article/background.png');
       background-size: cover;
       background-position: center;
@@ -38,12 +26,32 @@
       justify-content: center;
       align-items: center;
       position: relative;
-      top: 50%;
-      transform: translateY(-17%);
+      max-width: 680px;
+      width: 100%;
+      margin-right: 40px;
+      transform: translate(-12%, 18%);
    }
 }
 
-.background__article {
-   width: 680px;
-   display: grid;
-}
+.sm({
+   .article {
+      display: flex;
+      flex-direction: column;
+   }
+});
+
+.xs({
+   .article__image {
+      position: relative;
+      top: 0;
+      right: 0;
+      margin-bottom: 30px;
+   }
+
+   .article__text {
+      left: 0;
+      transform: none;
+      padding: 30px;
+      margin-left: 0;
+   }
+});
