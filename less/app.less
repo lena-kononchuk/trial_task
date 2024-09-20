@@ -5,13 +5,23 @@ body {
    margin: 0;
    padding: 0;
 
-   background-color: #F8F8F8;
+   background-color: @white;
+   color: @black;
+
+   display: flex;
+   flex-direction: column;
+}
+
+main {
+   flex: 1;
 }
 
 html,
 body {
-   scroll-behavior: smooth !important;
+   scroll-behavior: smooth;
    overflow-x: hidden;
+   height: 100%;
+   margin: 0;
 }
 
 @font-face {
@@ -21,7 +31,6 @@ body {
    font-style: normal;
 }
 
-@yellow: #F4E041;
 @lightGrey: #818181;
 @blue: #0E69AF;
 @black: #000000;
@@ -30,7 +39,7 @@ body {
 @white: #ffff;
 @darkBlue: #00062B;
 @duration: .3s;
-
+// background: #171717;
 @import 'blocks/button';
 @import 'blocks/image';
 @import 'blocks/input';

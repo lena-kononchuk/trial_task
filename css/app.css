@@ -3,12 +3,25 @@ body {
   font-size: 16px;
   margin: 0;
   padding: 0;
-  background-color: #F8F8F8;
+  background-color: #ffff;
+  display: flex;
+  flex-direction: column;
+}
+main {
+  flex: 1;
 }
 html,
 body {
-  scroll-behavior: smooth !important;
+  scroll-behavior: smooth;
   overflow-x: hidden;
+  height: 100%;
+  margin: 0;
+}
+@font-face {
+  font-family: 'Arial';
+  src: url('../fonts/ArialRegular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 .hide-xxs {
   display: none !important;
