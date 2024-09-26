@@ -9,36 +9,43 @@ class IntlTelInputElement extends HTMLElement {
         this.appendChild(this.inputElement);
         this.intlTelInputInstance = null; // Store intlTelInput instance
     }
+connectedCallback() {
+    // Initialize intlTelInput
+    this.intlTelInputInstance = intlTelInput(this.inputElement, {
+        autoHideDialCode: false,
+        autoPlaceholder: 'ON',
+        formatOnDisplay: true,
+        nationalMode: true,
+        preferredCountries: ['uk', 'ie', 'gb', 'in'],
+        initialCountry: "auto",
+        geoIpLookup: (callback) => {
+            fetch('https://ipinfo.io?token=4fbab07461a9f4')
+                .then(response => response.json())
+                .then(data => {
+                    const countryCode = (data && data.country) ? data.country : "ie";
+                    callback(countryCode);
+                })
+                .catch(() => {
+                    callback("ie"); // Default to Ireland if lookup fails
+                });
+        },
+        separateDialCode: true,
+        placeholderNumberType: 'MOBILE',
+        dropdownContainer: document.querySelector('.dropdown'), // Use the specific span container
+        utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/js/utils.js',
+    });
 
-    connectedCallback() {
-        // Initialize intlTelInput
-        this.intlTelInputInstance = intlTelInput(this.inputElement, {
-            autoHideDialCode: false,
-            autoPlaceholder: 'ON',
-            formatOnDisplay: true,
-            nationalMode: true,
-            preferredCountries: ['uk', 'ie', 'gb', 'in'],
-            initialCountry: "auto",
-            geoIpLookup: (callback) => {
-                fetch('https://ipinfo.io?token=4fbab07461a9f4')
-                    .then(response => response.json())
-                    .then(data => {
-                        const countryCode = (data && data.country) ? data.country : "ie";
-                        callback(countryCode);
-                    })
-                    .catch(() => {
-                        callback("ie"); // Default to Ireland if lookup fails
-                    });
-            },
-            separateDialCode: true,
-            placeholderNumberType: 'MOBILE',
-            dropdownContainer: document.querySelector('.dropdown'), // Use the specific span container
-            utilsScript: 'https://cdn.jsdelivr.net/npm/intl-tel-input@24.5.0/build/js/utils.js',
-        });
+    // Ensure dropdown is repositioned correctly when opened
+    this.setupDropdownPositioning();
 
-        // Ensure dropdown is repositioned correctly when opened
-        this.setupDropdownPositioning();
-    }
+    // Add event listener to restrict input to numbers only
+    this.inputElement.addEventListener('keydown', (event) => {
+        if (!this.isAllowedKey(event)) {
+            event.preventDefault(); // Prevent non-numeric keys
+        }
+    });
+}
+
 
     setupDropdownPositioning() {
         // Listen for dropdown open event
@@ -94,82 +101,112 @@ customElements.define('intl-tel-input', IntlTelInputElement);
 // Function to initialize form validation
 function initializeFormValidation() {
     const errorMessage = document.getElementById("error-message");
+    const form = document.getElementById("registrationForm"); // The form element
 
-    // Initially hide error message (opacity = 0)
+    // Initially hide the error message
     errorMessage.classList.remove('visible');
 
-    // Iterate through each input element
+    // Set initial classes and add event listeners to all input fields
     document.querySelectorAll('input').forEach(input => {
         input.classList.remove('valid', 'invalid'); // Remove validation classes
-        input.closest('.form__group').classList.add('empty'); // Mark the group as empty
+        input.closest('.form__group').classList.add('empty'); // Mark fields as empty
 
-        // Event listener for focus on input
+        // Focus event handler for each input field
         input.addEventListener('focus', () => {
-            input.closest('.form__group').classList.remove('empty'); // Remove empty class
+            input.closest('.form__group').classList.remove('empty'); // Remove "empty" class on focus
             errorMessage.classList.remove('visible'); // Hide error message on focus
         });
 
-        // Event listener for input changes
-        input.addEventListener('input', () => {
-            if (input.value.trim() !== '') {
-                input.closest('.form__group').classList.remove('empty'); // Remove empty class if input is not empty
-
-                // Validate phone number through intl-tel-input
-                if (input.classList.contains('iti__tel-input')) {
-                    const phoneNumberElement = input;
-                    const isValidPhone = phoneNumberElement.checkValidity();
-
-                    if (isValidPhone) {
-                        phoneNumberElement.classList.remove('invalid'); // Remove invalid class
-                        phoneNumberElement.classList.add('valid'); // Add valid class
-                        errorMessage.classList.remove('visible'); // Hide error message
-                    } else {
-                        phoneNumberElement.classList.remove('valid'); // Remove valid class
-                        phoneNumberElement.classList.add('invalid'); // Add invalid class
-                        errorMessage.innerText = "Please fill out all fields correctly."; // Show error message
-                        errorMessage.classList.add('visible'); // Show error message
-                    }
-                } else {
-                    // Validate other fields (e.g., name and email)
-                    if (input.checkValidity()) {
-                        input.classList.remove('invalid'); // Remove invalid class
-                        input.classList.add('valid'); // Add valid class
-                        errorMessage.classList.remove('visible'); // Hide error message
-                    } else {
-                        input.classList.remove('valid'); // Remove valid class
-                        input.classList.add('invalid'); // Add invalid class
-                        errorMessage.innerText = "Please fill out all fields correctly."; // Show error message
-                        errorMessage.classList.add('visible'); // Show error message
-                    }
-                }
-            } else {
-                input.closest('.form__group').classList.add('empty'); // Mark the group as empty if input is empty
-                input.classList.remove('valid', 'invalid'); // Remove validation classes
-                errorMessage.classList.remove('visible'); // Hide error message
-            }
-        });
+        // Input event handler for each input field
+        input.addEventListener('input', () => handleInputValidation(input, errorMessage));
     });
 
-    // Adding event listener for form submission
-    const form = document.getElementById("registrationForm"); // Make sure you have a form with this ID
-    form.addEventListener('submit', (event) => {
-        event.preventDefault(); // Prevent the default form submission
-
-        // Check the validity of all fields
-        let allValid = true;
-
-        document.querySelectorAll('input').forEach(input => {
-            if (input.classList.contains('invalid')) {
-                allValid = false; // Set allValid to false if any field is invalid
-            }
-        });
-
-        // If all fields are valid, show alert
-        if (allValid) {
-            alert('Form submitted successfully!'); // Show success message
-        }
-    });
+    // Form submission event handler
+    form.addEventListener('submit', (event) => handleSubmit(event, form, errorMessage));
 }
 
-// Call the function to initialize validation
+// Function to handle input validation for each field
+function handleInputValidation(input, errorMessage) {
+    if (input.value.trim() !== '') {
+        input.closest('.form__group').classList.remove('empty'); // Remove "empty" class when field is filled
+
+        // Validate the phone number
+        if (input.classList.contains('iti__tel-input')) {
+            validatePhoneNumber(input, errorMessage);
+        } else {
+            // Validate other fields (e.g., name and email)
+            validateField(input, errorMessage);
+        }
+    } else {
+        // If field is empty, reset classes and mark as empty
+        input.closest('.form__group').classList.add('empty');
+        input.classList.remove('valid', 'invalid');
+        errorMessage.classList.remove('visible');
+    }
+}
+
+// Function to validate phone number fields
+function validatePhoneNumber(phoneNumberElement, errorMessage) {
+    const isValidPhone = phoneNumberElement.checkValidity(); // Check phone number validity
+
+    if (isValidPhone) {
+        phoneNumberElement.classList.remove('invalid');
+        phoneNumberElement.classList.add('valid');
+        errorMessage.classList.remove('visible'); // Hide error message if phone number is valid
+    } else {
+        phoneNumberElement.classList.remove('valid');
+        phoneNumberElement.classList.add('invalid');
+        showErrorMessage(errorMessage, "Please fill out all fields correctly."); // Show error message
+    }
+}
+
+// Function to validate other fields (e.g., name and email)
+function validateField(input, errorMessage) {
+    if (input.checkValidity()) {
+        input.classList.remove('invalid');
+        input.classList.add('valid');
+        errorMessage.classList.remove('visible'); // Hide error message
+    } else {
+        input.classList.remove('valid');
+        input.classList.add('invalid');
+        showErrorMessage(errorMessage, "Please fill out all fields correctly."); // Show error message
+    }
+}
+
+// Function to handle form submission
+function handleSubmit(event, form, errorMessage) {
+    event.preventDefault(); // Prevent default form submission behavior
+
+    let allValid = true; // Flag to track if all fields are valid
+
+    // Validate all input fields in the form
+    document.querySelectorAll('input').forEach(input => {
+        if (!input.checkValidity() || input.classList.contains('invalid')) {
+            allValid = false; // Set flag to false if any field is invalid
+        }
+    });
+
+    // If all fields are valid, show an alert and reset the form after clicking "OK"
+    if (allValid) {
+        alert('Form submitted successfully!'); // Show success message
+        form.reset(); // Reset the form fields
+
+        // Remove validation classes and mark fields as empty
+        document.querySelectorAll('input').forEach(input => {
+            input.classList.remove('valid', 'invalid');
+            input.closest('.form__group').classList.add('empty');
+        });
+
+        errorMessage.classList.remove('visible'); // Hide error message
+    }
+}
+
+// Function to display error message
+function showErrorMessage(errorMessage, message) {
+    errorMessage.innerText = message; // Set error message text
+    errorMessage.classList.add('visible'); // Show error message
+}
+
+// Initialize form validation on page load
 initializeFormValidation();
+
