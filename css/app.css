@@ -25,7 +25,7 @@ body {
 }
 @font-face {
   font-family: 'Arial';
-  src: url('../fonts/ArialRegular.ttf') format('truetype');
+  src: url('../font/ArialRegular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -809,7 +809,7 @@ textarea {
 .article__text {
   position: relative;
   padding: 101px 27px 63px 92px;
-  background-image: url('../../img/article/background.png');
+  background-image: url('../img/article/background.png');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
@@ -983,6 +983,9 @@ textarea {
     box-shadow: 0px 4px 19.3px 4px #00000030;
     margin-bottom: 58px;
   }
+}
+.form__label {
+  display: none;
 }
 .form__group:not(:last-of-type) {
   margin-bottom: 11px;
@@ -1191,7 +1194,7 @@ textarea {
 }
 .background__welcome {
   height: 539px;
-  background-image: url('../img/md.jpg');
+  background-image: url('../img/hero.jpg');
   background-size: 50% auto;
   background-position: right center;
   background-repeat: no-repeat;
@@ -1236,6 +1239,11 @@ textarea {
     opacity: 0;
     margin-bottom: 58px;
     pointer-events: none;
+  }
+}
+@media (max-width: 550px) {
+  .parallelogram {
+    margin-bottom: 78px;
   }
 }
 .hr {
