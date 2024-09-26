@@ -20,7 +20,7 @@ connectedCallback() {
         initialCountry: "auto",
         geoIpLookup: (callback) => {
             fetch('https://ipinfo.io?token=4fbab07461a9f4')
-                // .then(response => response.json())
+                .then(response => response.json())
                 .then(data => {
                     const countryCode = (data && data.country) ? data.country : "ie";
                     callback(countryCode);
