@@ -101,12 +101,14 @@ customElements.define('intl-tel-input', IntlTelInputElement);
 // Function to initialize form validation
 function initializeFormValidation() {
     const errorMessage = document.getElementById("error-message");
-    const form = document.getElementById("registrationForm"); // The form element
+    const form = document.getElementById("registrationForm"); // Form element
 
-    // Initially hide the error message
-    errorMessage.classList.remove('visible');
+    // Initially hide the error message if it exists
+    if (errorMessage) {
+        errorMessage.classList.remove('visible');
+    }
 
-    // Set initial classes and add event listeners to all input fields
+    // Set initial classes and add event listeners for all input fields
     document.querySelectorAll('input').forEach(input => {
         input.classList.remove('valid', 'invalid'); // Remove validation classes
         input.closest('.form__group').classList.add('empty'); // Mark fields as empty
@@ -114,23 +116,23 @@ function initializeFormValidation() {
         // Focus event handler for each input field
         input.addEventListener('focus', () => {
             input.closest('.form__group').classList.remove('empty'); // Remove "empty" class on focus
-            errorMessage.classList.remove('visible'); // Hide error message on focus
+            errorMessage?.classList.remove('visible'); // Hide error message on focus
         });
 
         // Input event handler for each input field
         input.addEventListener('input', () => handleInputValidation(input, errorMessage));
     });
 
-    // Form submission event handler
+    // Submit event handler for the form
     form.addEventListener('submit', (event) => handleSubmit(event, form, errorMessage));
 }
 
-// Function to handle input validation for each field
+// Function to handle validation for each input field
 function handleInputValidation(input, errorMessage) {
     if (input.value.trim() !== '') {
-        input.closest('.form__group').classList.remove('empty'); // Remove "empty" class when field is filled
+        input.closest('.form__group').classList.remove('empty'); // Remove "empty" class if field is filled
 
-        // Validate the phone number
+        // Check phone number
         if (input.classList.contains('iti__tel-input')) {
             validatePhoneNumber(input, errorMessage);
         } else {
@@ -138,21 +140,21 @@ function handleInputValidation(input, errorMessage) {
             validateField(input, errorMessage);
         }
     } else {
-        // If field is empty, reset classes and mark as empty
+        // If the field is empty, reset classes and mark as empty
         input.closest('.form__group').classList.add('empty');
         input.classList.remove('valid', 'invalid');
-        errorMessage.classList.remove('visible');
+        errorMessage?.classList.remove('visible');
     }
 }
 
-// Function to validate phone number fields
+// Function to validate phone number input
 function validatePhoneNumber(phoneNumberElement, errorMessage) {
     const isValidPhone = phoneNumberElement.checkValidity(); // Check phone number validity
 
     if (isValidPhone) {
         phoneNumberElement.classList.remove('invalid');
         phoneNumberElement.classList.add('valid');
-        errorMessage.classList.remove('visible'); // Hide error message if phone number is valid
+        errorMessage?.classList.remove('visible'); // Hide error message if phone number is valid
     } else {
         phoneNumberElement.classList.remove('valid');
         phoneNumberElement.classList.add('invalid');
@@ -165,7 +167,7 @@ function validateField(input, errorMessage) {
     if (input.checkValidity()) {
         input.classList.remove('invalid');
         input.classList.add('valid');
-        errorMessage.classList.remove('visible'); // Hide error message
+        errorMessage?.classList.remove('visible'); // Hide error message
     } else {
         input.classList.remove('valid');
         input.classList.add('invalid');
@@ -177,7 +179,7 @@ function validateField(input, errorMessage) {
 function handleSubmit(event, form, errorMessage) {
     event.preventDefault(); // Prevent default form submission behavior
 
-    let allValid = true; // Flag to track if all fields are valid
+    let allValid = true; // Flag to track the validity of all fields
 
     // Validate all input fields in the form
     document.querySelectorAll('input').forEach(input => {
@@ -189,7 +191,7 @@ function handleSubmit(event, form, errorMessage) {
     // If all fields are valid, show an alert and reset the form after clicking "OK"
     if (allValid) {
         alert('Form submitted successfully!'); // Show success message
-        form.reset(); // Reset the form fields
+        form.reset(); // Reset all form fields
 
         // Remove validation classes and mark fields as empty
         document.querySelectorAll('input').forEach(input => {
@@ -197,16 +199,14 @@ function handleSubmit(event, form, errorMessage) {
             input.closest('.form__group').classList.add('empty');
         });
 
-        errorMessage.classList.remove('visible'); // Hide error message
+        errorMessage?.classList.remove('visible'); // Hide error message
     }
 }
 
 // Function to display error message
 function showErrorMessage(errorMessage, message) {
-    errorMessage.innerText = message; // Set error message text
-    errorMessage.classList.add('visible'); // Show error message
+    if (errorMessage) {
+        errorMessage.innerText = message; // Set the error message text
+        errorMessage.classList.add('visible'); // Show the error message
+    }
 }
-
-// Initialize form validation on page load
-initializeFormValidation();
-
