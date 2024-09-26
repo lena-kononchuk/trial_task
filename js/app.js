@@ -9,31 +9,49 @@ function loadHTML(id, url) {
         })
         .then((data) => {
             // Insert the fetched HTML into the element with the specified ID
-            document.getElementById(id).innerHTML = data;
+            const targetElement = document.getElementById(id);
+            if (targetElement) {
+                targetElement.innerHTML = data;
 
-            // Check if the loaded content is the form, and initialize validation if so
-            if (id === 'form') {
-                initializeFormValidation(); // Call the function to initialize form validation
-            }
+                // Check if the loaded content is the form, and initialize validation if so
+                if (id === 'form') {
+                    // Ensure the initializeFormValidation function is defined
+                    if (typeof initializeFormValidation === 'function') {
+                        initializeFormValidation(); // Call the function to initialize form validation
+                    } else {
+                        console.error('initializeFormValidation is not defined.');
+                    }
+                }
 
-            // Check if the loaded content is the swiper, and initialize it if so
-            if (id === 'swiper') {
-                initializeSwiper(); // Call the function to initialize Swiper
-            }
+                // Check if the loaded content is the swiper, and initialize it if so
+                if (id === 'swiper' && typeof initializeSwiper === 'function') {
+                    initializeSwiper(); // Call the function to initialize Swiper
+                }
 
-            // Check if the loaded content is the header (navigation), and initialize the mobile menu
-            if (id === 'header') {
-                initializeMobileMenuAndScroll(); // Call the function to initialize mobile menu and scroll behavior
+                // Check if the loaded content is the header (navigation), and initialize the mobile menu
+                if (id === 'header' && typeof initializeMobileMenuAndScroll === 'function') {
+                    initializeMobileMenuAndScroll(); // Call the function to initialize mobile menu and scroll behavior
+                }
+
+                // Check if the loaded content is the article, and initialize related sliders
+                if (id === 'article') {
+                    if (typeof initializeSumSlider === 'function') {
+                        initializeSumSlider();
+                    }
+                    if (typeof initializeMonthsSlider === 'function') {
+                        initializeMonthsSlider();
+                    }
+                }
+            } else {
+                console.error(`Element with id ${id} not found.`);
             }
-            if (id === 'article') {
-                initializeSumSlider();
-                initializeMonthsSlider();
-            }   
         })
         .catch((error) => {
             console.error(`Error loading ${url}:`, error);
         });
 }
+
+
 
 // Function to initialize mobile menu and smooth scroll behavior
 function initializeMobileMenuAndScroll() {
