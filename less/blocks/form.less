@@ -1,0 +1,152 @@
+.form {
+   justify-content: center;
+   align-items: center;
+   max-width: 354px;
+   width: 100%;
+   background: #4A4A4AD1;
+   box-shadow: 0px 0px 12px 12px #D81E054A;
+   border-radius: 15px;
+   padding: 48px 27px 45px 27px;
+
+   .xs({
+      background: @white;
+      box-shadow: 0px 4px 19.3px 4px #00000030;
+      margin-bottom: 58px;
+
+   });
+
+&__label {
+   display: none;
+}
+
+
+&__group {
+   &:not(:last-of-type) {
+      margin-bottom: 11px;
+   }
+
+   &:last-of-type {
+      margin-bottom: 14px;
+   }
+}
+
+&__input {
+   width: 100%;
+   font-size: 16px;
+   line-height: 26px;
+   border: 1px solid #D0CFCF;
+   box-sizing: border-box;
+   padding: 12px 14px;
+   border-radius: 4px;
+   background: #F7F7F7;
+   cursor: pointer;
+   outline: none;
+
+   &::placeholder {
+      color: #818181;
+      opacity: 1;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 400;
+      line-height: 17.5px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+
+      .sm({
+         text-align: center;
+      });
+}
+}
+
+.form__group.empty input {
+   border-color: transparent;
+}
+
+input {
+   border: 2px solid transparent;
+   outline: none;
+}
+
+input:focus {
+   border-color: transparent;
+}
+
+input:valid {
+   border-color: #42d142;
+}
+
+input:invalid {
+   border-color: @red;
+}
+
+intl-tel-input input {
+   width: 100%;
+   font-size: 16px;
+   line-height: 26px;
+   border: 1px solid #D0CFCF;
+   box-sizing: border-box;
+   padding: 6px 8px;
+   border-radius: 4px;
+   background: #F7F7F7;
+   margin-bottom: 11px;
+
+   &:focus {
+      outline: none;
+   }
+}
+
+.error-message {
+   opacity: 0;
+   transition: opacity 0.3s ease-in-out;
+   padding: 0 0 14px 0;
+   height: 24px;
+   color: white;
+
+   .xs({
+      color: @red;
+
+   });
+}
+
+.error-message.visible {
+   opacity: 1;
+}
+
+.iti__selected-country {
+   background-color: #D9D9D9;
+}
+}
+
+.form__section {
+   padding: 70px 0 75px 0;
+}
+
+.iti-mobile .iti__country-list {
+   max-height: 200px;
+   width: 300px;
+   margin-top: -30px;
+}
+
+.iti {
+   display: block;
+}
+
+
+.iti--fullscreen-popup.iti--container {
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   padding: 5px 0;
+}
+
+.iti__search-input {
+   outline: none;
+   padding: 10px 5px;
+}
+
+.iti--fullscreen-popup .iti__dropdown-content {
+
+   max-height: 177px;
+   margin-top: -4px;
+   width: 100%;
+   min-width: 300px;
+}

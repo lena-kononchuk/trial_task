@@ -1,3 +1,7 @@
+* {
+   box-sizing: border-box;
+}
+
 body {
    font-family: "Roboto", sans-serif;
    font-weight: 400;
@@ -28,106 +32,10 @@ body {
 
 @font-face {
    font-family: 'Arial';
-   src: url('../fonts/ArialRegular.ttf') format('truetype');
+   src: url('../font/ArialRegular.ttf') format('truetype');
    font-weight: normal;
    font-style: normal;
 }
-
-.logo {
-   position: relative;
-   left: 0px;
-
-   display: inline-block;
-   flex: 0 0 auto;
-   flex-grow: 0;
-   flex-shrink: 0;
-
-   width: 79px;
-   height: 66px;
-   z-index: 20;
-
-   background-repeat: no-repeat;
-   background-position: left center;
-   background-size: contain;
-
-   background-image: url('../img/logo.svg');
-}
-
-.background {
-
-   background-size: cover;
-   background-position: center;
-   background-repeat: no-repeat;
-
-
-   &__welcome {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 50%;
-      min-height: 537px;
-      padding-top: 79px;
-      padding-bottom: 70px;
-      background-image: url('../img/hero.jpg');
-      z-index: -1;
-
-
-      .sm({
-         height: 443px;
-      });
-}
-
-}
-
-.form__input {
-   height: 40px;
-}
-
-.parallelogram {
-   width: 480px;
-   height: 223px;
-   transform: skew(-22deg);
-   background: #D9D9D9;
-   border-radius: 25px;
-
-   .sm({
-      width: 400px;
-      height: 200px;
-   });
-
-.xs({
-   width: 356px;
-   height: 187px;
-   transform: none;
-   background: #D9D9D9;
-   border-radius:0px;
-});
-}
-
-.hr {
-   position: relative;
-
-   &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -15px;
-      width: 2px;
-      height: 100%;
-      background-color: @lightRed;
-   }
-
-   &::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: -15px;
-      width: 2px;
-      height: 100%;
-      background-color: @lightRed;
-   }
-}
-
 
 @lightGrey: #818181;
 @blue: #0E69AF;
@@ -167,5 +75,129 @@ body {
 @import 'base/normalize';
 @import 'base/typography';
 @import 'blocks/wrapper';
+@import 'blocks/service';
 @import 'blocks/article';
 @import 'blocks/range';
+@import 'blocks/form';
+@import 'blocks/footer';
+
+
+.swiper-slide {
+   height: auto !important;
+}
+
+.flex-vertical {
+   display: flex;
+   flex-direction: column;
+   gap: 7px;
+}
+
+.logo {
+   position: relative;
+   left: 0px;
+
+   display: inline-block;
+   flex: 0 0 auto;
+   flex-grow: 0;
+   flex-shrink: 0;
+
+   width: 79px;
+   height: 66px;
+   z-index: 20;
+
+   background-repeat: no-repeat;
+   background-position: left center;
+   background-size: contain;
+
+   background-image: url('../img/logo.svg');
+}
+
+.background {
+   background-size: cover;
+   background-position: center;
+   background-repeat: no-repeat;
+
+   &__welcome {
+      height: 539px;
+      background-image: url('../img/hero.jpg');
+      background-size: 50% auto;
+      background-position: right center;
+      background-repeat: no-repeat;
+
+      .sm({
+         background-image: none;
+
+         .square {
+            min-width: 320px;
+            max-width: 356px;
+            width: 100%;
+            height: 187px;
+            background: #D9D9D9;
+            border-radius: 0;
+            margin: 0 auto;
+            margin-top: 58px;
+         }
+
+      });
+}
+}
+
+.form__input {
+   height: 40px;
+}
+
+.parallelogram {
+   width: 395px;
+   height: 223px;
+   background: #D9D9D9;
+   border-radius: 25px;
+   transform: skew(-22deg);
+   // padding-right: 42px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-left: 30px;
+
+   .sm({
+      // opacity: 0;
+      width: 300px;
+      height: 200px;
+   });
+
+.xs({
+   opacity: 0;
+   margin-bottom: 58px;
+   pointer-events: none;
+});
+
+.xxs({
+   margin-bottom: 78px;
+});
+
+
+&__small {}
+}
+
+.hr {
+   position: relative;
+
+   &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -15px;
+      width: 2px;
+      height: 100%;
+      background-color: @lightRed;
+   }
+
+   &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -15px;
+      width: 2px;
+      height: 100%;
+      background-color: @lightRed;
+   }
+}

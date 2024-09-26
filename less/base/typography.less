@@ -5,8 +5,8 @@
    font-weight: 400;
 
    .xs({
-      font-size: (28px * .666);
-      line-height: (40px * .666);
+      font-size: 24px;
+      line-height: 28px;
    });
 
 }
@@ -16,8 +16,8 @@
    line-height: 31px;
 
    .xs({
-      font-size: (25px * .666);
-      line-height: (31px * .666);
+      font-size: 24px;
+      line-height: 28px;
    });
 }
 
@@ -25,10 +25,6 @@
    font-size: 31px;
    line-height: 36.8px;
 
-   .xs({
-      font-size: (31px * .666);
-      line-height: (36.8px * .666);
-   });
 }
 
 .text {
@@ -50,34 +46,23 @@
 
 .title {
    font-size: 37px;
+   text-align: center;
    line-height: 53.2px;
 
-   .xs({
-      font-size: (37px * .666);
-      line-height: (53.2px * .666);
-   });
 
-&__range {
-   text-align: center;
-   font-size: 38px;
-   line-height: 48px;
-   font-weight: 700;
+   &__range {
+      text-align: center;
+      font-size: 38px;
+      line-height: 48px;
+      font-weight: 700;
+   }
 
-   .xs({
-      font-size: (38px * .666);
-      line-height: (48px * .666);
-   });
-}
+   &__partners {
+      font-size: 30px;
+      line-height: 41.3px;
+      text-align: center;
 
-&__partners {
-   font-size: 30px;
-   line-height: 41.3px;
-
-   .xs({
-      font-size: (30px * .666);
-      line-height: (41.3px * .666);
-   });
-}
+   }
 
 }
 

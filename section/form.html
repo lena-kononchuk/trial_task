@@ -1,29 +1,28 @@
-<div class="flex center-xs middle-xs">
-   <form class="form">
+<div class="flex end-sm center-xs middle-xs">
+   <form class="form" id="registrationForm" novalidate>
       <div class="form__group">
-         <label for="input1">Input 1</label>
-         <input type="text" id="input1" class="form__input" placeholder="Введите значение" required>
+         <label for="firstName" class="form__label">Il suo nome</label>
+         <input type="text" id="firstName" class="form__input" placeholder="il suo nome" required maxlength="170"
+            pattern="[A-Za-zА-Яа-яЁё]{3,}" title="Enter at least 3 characters.">
       </div>
       <div class="form__group">
-         <label for="input2">Input 2</label>
-         <input type="text" id="input2" class="form__input" placeholder="Введите значение" required>
+         <label for="lastName" class="form__label">Il suo cognome</label>
+         <input type="text" id="lastName" class="form__input" placeholder="il suo cognome" required maxlength="170"
+            pattern="[A-Za-zА-Яа-яЁё]{3,}" title="Enter at least 3 characters.">
       </div>
       <div class="form__group">
-         <label for="input3">Input 3</label>
-         <input type="text" id="input3" class="form__input" placeholder="Введите значение" required>
+         <label for="email" class="form__label">E-mail</label>
+         <input type="email" id="email" class="form__input" placeholder="e-mail" required maxlength="170">
       </div>
       <div class="form__group">
-         <label for="input4">Input 4</label>
-         <input type="text" id="input4" class="form__input" placeholder="Введите значение" required>
+         <label for="phoneNumber" class="form__label">Numero di telefono</label>
+         <intl-tel-input name="profile[phone_number]" value="us" type="tel" id="phoneNumber" placeholder=""
+            maxlength="13" pattern="^[0-9-+\s()]*$" title="Only numbers" inputmode="numeric"></intl-tel-input>
       </div>
       <div class="form__group">
-         <label for="input5">Input 5</label>
-         <input type="text" id="input5" class="form__input" placeholder="Введите значение" required>
+         <div id="error-message" class="error-message"></div>
       </div>
-      <div class="form__group">
-         <label for="input6">Input 6</label>
-         <input type="text" id="input6" class="form__input" placeholder="Введите значение" required>
-      </div>
-      <button type="submit" class="form__submit">Отправить</button>
+
+      <button type="submit" class="button button__form" aria-label="submit">Registrati</button>
    </form>
 </div>
