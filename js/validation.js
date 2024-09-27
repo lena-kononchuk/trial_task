@@ -57,20 +57,19 @@ connectedCallback() {
     }
 
 repositionDropdown() {
-    const dropdown = document.querySelector('.iti__dropdown'); // Country dropdown list
-    const dropdownContainer = document.querySelector('.dropdown'); // Container for the dropdown list
+    const dropdown = document.querySelector('.iti__dropdown'); 
+    const dropdownContainer = document.querySelector('.dropdown'); 
     if (!dropdown || !dropdownContainer) return;
 
-    // Get the coordinates of the container relative to the browser window
-    const rect = dropdownContainer.getBoundingClientRect();
 
-    // Position the dropdown list
-    dropdown.style.position = 'absolute'; // Set the position to absolute
-    dropdown.style.left = `${rect.left + window.scrollX}px`; // Positioning aligned to the left edge of the container
-    dropdown.style.width = `${rect.width}px`; // Width matches the width of the container
+    const rect = dropdownContainer.getBoundingClientRect();
     
-    // Set the position of the dropdown list below the container
-    dropdown.style.top = `${rect.bottom + window.scrollY}px`; // Positioning below the container
+
+    dropdown.style.position = 'absolute';
+    dropdown.style.left = `${rect.left + window.scrollX}px`; 
+    dropdown.style.width = `${rect.width}px`;
+    
+    dropdown.style.top = `${rect.bottom + window.scrollY}px`; 
 }
 
 
