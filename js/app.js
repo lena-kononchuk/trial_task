@@ -90,7 +90,7 @@ function initializeMobileMenuAndScroll() {
     }
 }
 
-// Initialize Swiper function (already provided)
+// Initialize Swiper function
 function initializeSwiper() {
     const swiper = new Swiper('.swiper__reviews', {
         loop: false,
@@ -123,7 +123,17 @@ function initializeSwiper() {
         swiper.on('slideChange', updateNavigationButtons);
         updateNavigationButtons();
     }
+
+    // Add keyboard navigation
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight') {
+            swiper.slideNext(); // Slide to the next slide
+        } else if (event.key === 'ArrowLeft') {
+            swiper.slidePrev(); // Slide to the previous slide
+        }
+    });
 }
+
 // copy logo
 var copy = document.querySelector(".logo_items").cloneNode(true);
     document.querySelector(".logos").appendChild(copy);

@@ -778,6 +778,12 @@ textarea {
   display: flex;
   flex-direction: column;
 }
+@media (max-width: 47.99em) {
+  .service__card--grow {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
 .service__text {
   min-width: 332px;
 }
@@ -1066,6 +1072,7 @@ textarea {
 }
 .form .iti__selected-country {
   background-color: #D9D9D9;
+  height: 38px;
 }
 .form__section {
   padding: 70px 0 75px 0;
@@ -1093,6 +1100,7 @@ textarea {
   margin-top: -4px;
   width: 100%;
   min-width: 300px;
+  position: absolute;
 }
 .footer {
   display: flex;
