@@ -57,20 +57,20 @@ connectedCallback() {
     }
 
 repositionDropdown() {
-    const dropdown = document.querySelector('.iti__dropdown'); // Выпадающий список стран
-    const dropdownContainer = document.querySelector('.dropdown'); // Контейнер для выпадающего списка
+    const dropdown = document.querySelector('.iti__dropdown'); // Country dropdown list
+    const dropdownContainer = document.querySelector('.dropdown'); // Container for the dropdown list
     if (!dropdown || !dropdownContainer) return;
 
-    // Получаем координаты контейнера относительно окна браузера
+    // Get the coordinates of the container relative to the browser window
     const rect = dropdownContainer.getBoundingClientRect();
+
+    // Position the dropdown list
+    dropdown.style.position = 'absolute'; // Set the position to absolute
+    dropdown.style.left = `${rect.left + window.scrollX}px`; // Positioning aligned to the left edge of the container
+    dropdown.style.width = `${rect.width}px`; // Width matches the width of the container
     
-    // Позиционирование выпадающего списка
-    dropdown.style.position = 'absolute';
-    dropdown.style.left = `${rect.left + window.scrollX}px`; // Позиционирование по левому краю контейнера
-    dropdown.style.width = `${rect.width}px`; // Ширина совпадает с шириной контейнера
-    
-    // Устанавливаем позицию выпадающего списка под контейнером
-    dropdown.style.top = `${rect.bottom + window.scrollY}px`; // Позиционирование снизу
+    // Set the position of the dropdown list below the container
+    dropdown.style.top = `${rect.bottom + window.scrollY}px`; // Positioning below the container
 }
 
 

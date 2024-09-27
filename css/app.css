@@ -73,6 +73,8 @@ body {
   text-transform: uppercase;
   border-radius: 4px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 .button:hover {
   box-shadow: 8px 8px 10px 0px #00000066 inset;
@@ -1078,9 +1080,12 @@ textarea {
   padding: 70px 0 75px 0;
 }
 .iti-mobile .iti__country-list {
-  max-height: 200px;
+  max-height: 122px;
   width: 300px;
   margin-top: -30px;
+}
+.iti--inline-dropdown .iti__country-list {
+  max-height: 122px;
 }
 .iti {
   display: block;
@@ -1095,12 +1100,31 @@ textarea {
   outline: none;
   padding: 10px 5px;
 }
+.iti--inline-dropdown .iti__dropdown-content {
+  margin-top: -1px;
+}
 .iti--fullscreen-popup .iti__dropdown-content {
-  max-height: 177px;
-  margin-top: -4px;
+  max-height: 132px !important;
+  margin-top: -6px;
   width: 100%;
-  min-width: 300px;
-  position: absolute;
+  min-width: 266px;
+}
+.dropdown {
+  position: relative;
+}
+.iti--container {
+  position: absolute !important;
+  z-index: 2;
+}
+@media (max-width: 550px) {
+  .iti--container {
+    position: absolute !important;
+    z-index: 2;
+  }
+}
+.iti .iti--container .iti--inline-dropdown {
+  left: 0;
+  top: 0;
 }
 .footer {
   display: flex;

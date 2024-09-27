@@ -35,20 +35,19 @@ function initializeSumSlider() {
     const $sliderSum = $("#range-sum"); // ID of the amount slider
 
     $sliderSum.ionRangeSlider({
-        type: "double",
+        type: "single",
         grid: true,
         min: minSum,
         max: maxSum,
-        // from: minSum, // Left slider initial value
-       to: 2000,   // Right slider initial value
+        from: sum, // Set the initial value based on the variable sum
         postfix: ' €',
         onStart: function (data) {
-            sum = data.to; // Use 'data.to' for the right slider's initial value
-            addMarks($sliderSum, marksSum, minSum, maxSum); // Updated to add marks
+            sum = data.from; // Set sum from initial value
+            addMarks($sliderSum, marksSum, maxSum); // Updated to add marks
             updateProfit(); // Update profit on start
         },
         onChange: function (data) {
-            sum = data.to; // Use 'data.to' to control the right slider value
+            sum = data.from; // Use data.from for the current slider value
             updateProfit(); // Update profit on change
         }
     });
@@ -64,11 +63,11 @@ function initializeMonthsSlider() {
         min: minMonths,
         max: maxMonths,
         from: minMonths,
-       step: 1,
+        step: 1,
         postfix: ' month',
         onStart: function (data) {
             months = data.from; // Update 'months' to reflect the slider's initial value
-            addMarks($sliderMonths, marksMonths, minMonths, maxMonths, true); // Add marks for months, passing `true`
+            addMarks($sliderMonths, marksMonths, minMonths, maxMonths, true); // Add marks for months
             updateProfit(); // Update profit on start
         },
         onChange: function (data) {
@@ -80,19 +79,24 @@ function initializeMonthsSlider() {
 
 // Function to calculate potential profit
 function calculateProfit(amount, months) {
-    let profitRate = 4.3; // Profit rate (4.3 for €2000 to yield €8600)
-    return amount * profitRate * months; // Profit for the specified months
+    let annualProfitRate = 430; // Profit rate as a percentage (430% annual)
+    let monthlyProfitRate = annualProfitRate / 100; // Monthly profit rate as a decimal
+
+    return amount * monthlyProfitRate * months; // Profit for the specified months
 }
 
 // Function to update the displayed profit
 function updateProfit() {
-    const profit = Math.round(calculateProfit(sum, months)); // Округление до целого числа
-    $('.profit-text').text('MOGUĆA DOBIT:'); // Обновляем текст
-    $('.profit-amount').text(`€ ${profit}`); // Обновляем сумму с € символом
+    const profit = Math.round(calculateProfit(sum, months)); 
+    $('.profit-text').text('MOGUĆA DOBIT:'); 
+    $('.profit-amount').text(`€ ${profit}`); 
 }
-// Main function
+
 $(function () {
     // Initialize sliders when the page loads
     initializeSumSlider();
     initializeMonthsSlider();
+
+    // Initial profit calculation on page load
+    updateProfit();
 });
